@@ -34,7 +34,7 @@ class ParentNode(HTMLNode):
 
 
 class LeafNode(HTMLNode):
-    def __init__(self, tag: str | None, value: str, props: dict[str, str] = {}):
+    def __init__(self, tag: str | None, value: str | None, props: dict[str, str] = {}):
         super().__init__(tag=tag, value=value, children=[], props=props)
 
     def to_html(self) -> str:
