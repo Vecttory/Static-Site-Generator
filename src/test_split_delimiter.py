@@ -4,7 +4,7 @@ from split_delimiter import split_nodes_delimiter
 from textnode import TextType, TextNode
 
 
-class TestTextNode(unittest.TestCase):
+class TestSplitDelimiter(unittest.TestCase):
     def test_empty_node_list(self):
         nodes = split_nodes_delimiter([], "*", TextType.BOLD)
         self.assertEqual(nodes, [])
