@@ -28,7 +28,6 @@ class ParentNode(HTMLNode):
         if not self.tag:
             raise ValueError("All parent nodes must have a tag.")
         if not self.children:
-            print(self.children)
             raise ValueError("All parent nodes must have children.")
         return f'<{self.tag}>{"".join(child.to_html() for child in self.children)}</{self.tag}>'
 

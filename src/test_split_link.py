@@ -1,6 +1,6 @@
 import unittest
 
-from split_link import split_nodes_image
+from split_link import split_nodes_with_links
 from textnode import TextNode, TextType
 
 
@@ -10,7 +10,7 @@ class TestSplitDelimiter(unittest.TestCase):
             "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png) and another ![second image](https://i.imgur.com/3elNhQu.png)",
             TextType.TEXT,
         )
-        new_nodes = split_nodes_image([node])
+        new_nodes = split_nodes_with_links([node])
         self.assertListEqual(
             [
                 TextNode("This is text with an ", TextType.TEXT),
@@ -28,7 +28,7 @@ class TestSplitDelimiter(unittest.TestCase):
             "![image](https://i.imgur.com/zjjcJKZ.png)",
             TextType.TEXT,
         )
-        new_nodes = split_nodes_image([node])
+        new_nodes = split_nodes_with_links([node])
         self.assertListEqual(
             [
                 TextNode("image", TextType.IMAGE,
@@ -42,7 +42,7 @@ class TestSplitDelimiter(unittest.TestCase):
             "This is text with an [link](https://i.imgur.com/zjjcJKZ.png) and another [second link](https://i.imgur.com/3elNhQu.png)",
             TextType.TEXT,
         )
-        new_nodes = split_nodes_image([node])
+        new_nodes = split_nodes_with_links([node])
         self.assertListEqual(
             [
                 TextNode("This is text with an ", TextType.TEXT),
@@ -60,7 +60,7 @@ class TestSplitDelimiter(unittest.TestCase):
             "[link](https://i.imgur.com/zjjcJKZ.png)",
             TextType.TEXT,
         )
-        new_nodes = split_nodes_image([node])
+        new_nodes = split_nodes_with_links([node])
         self.assertListEqual(
             [
                 TextNode("link", TextType.LINK,
@@ -75,7 +75,7 @@ class TestSplitDelimiter(unittest.TestCase):
             TextType.TEXT,
         )
         with self.assertRaises(ValueError):
-            split_nodes_image([node])
+            split_nodes_with_links([node])
 
 
 if __name__ == "__main__":
