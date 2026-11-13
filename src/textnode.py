@@ -49,3 +49,7 @@ def text_node_to_html_node(text_node: TextNode) -> LeafNode:
             if text_node.url is None:
                 raise ValueError("Image text nodes must have a URL.")
             return LeafNode(tag="img", value=None, props={"src": text_node.url, "alt": text_node.text})
+
+
+def text_to_nodes(text: str) -> list[TextNode]:
+    return [TextNode(text, TextType.TEXT)]
