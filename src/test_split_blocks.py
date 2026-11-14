@@ -1,6 +1,6 @@
 import unittest
 
-from split_blocks import markdown_to_blocks
+from split_blocks import markdown_to_blocks, block_to_block_type, BlockType
 
 
 class TestSplitBlocks(unittest.TestCase):
@@ -44,6 +44,42 @@ This is the same paragraph on a new line
                 "- This is a list\n- with items",
             ],
         )
+
+
+class TestBlockToBlockType(unittest.TestCase):
+    def test_eq_headings(self):
+        results = []
+        for i in range(0, 8):
+            results.append(block_to_block_type(
+                f'{'#' * i} This is a heading {1}'))
+        expected_results = [BlockType.PARAGRAPH] + \
+            [BlockType.HEADING] * 6 + [BlockType.PARAGRAPH]
+        self.assertEqual(results, expected_results)
+
+    def test_eq_code(self):
+        text = "```\nThis should be recognized as a code block\ncd ..\nstart run dev\nthe server has started\n```"
+        block_type = block_to_block_type(text)
+        self.assertEqual(block_type, BlockType.CODE)
+
+    def test_eq_quote(self):
+        text = ">hello\n>\n> I am a quote\n>\n>\n>\nThis is another quote\n>"
+        block_type = block_to_block_type(text)
+        self.assertEqual(block_type, BlockType.QUOTE)
+
+    def test_eq_unordered_list(self):
+        text = "- this is 1\n- this is 2  \n- This is Three\n- "
+        block_type = block_to_block_type(text)
+        self.assertEqual(block_type, BlockType.UL)
+
+    def test_eq_ordered_list(self):
+        text = "1. this is 1\n2. this is 2  \n3. This is Three"
+        block_type = block_to_block_type(text)
+        self.assertEqual(block_type, BlockType.OL)
+
+    def test_eq_paragraph(self):
+        text = "This should be a normal paragraph\nGoodbye"
+        block_type = block_to_block_type(text)
+        self.assertEqual(block_type, BlockType.PARAGRAPH)
 
 
 if __name__ == "__main__":
